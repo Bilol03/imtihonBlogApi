@@ -1,4 +1,4 @@
-import { responce } from "./responce.handler.js"
+import { responce } from "./response.js"
 
 let errorHandler = (func) => {
 	return (req, res, next) => {
