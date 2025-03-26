@@ -10,9 +10,12 @@ app.use(express.json())
 app.use(cookieParser());
 app.use("/uploads", express.static( "./uploads"))
 
+
 import authRole from "./routes/auth.routes.js"
+import userRoute from "./routes/users.routes.js"
 
 app.use("/auth", authRole)
+app.use("/users", userRoute)
 
 connectDB()
 app.use(errController);

@@ -12,18 +12,25 @@ const storage = multer.diskStorage({
 		cb(null, uploadDir)
 	},
 
+
 	filename: function (req, file, cb) {
-        const ext = path.extname(file.originalname);
-        if(!file) return cb(new Error("File not exist"))
-        if (ext !== '.jpg' && ext !== '.png' && ext !== '.jpeg') return cb(new Error('Invalid image extension.'));
-		cb(
+        cb(
 			null,
 			file.fieldname + '-' + Date.now() + path.extname(file.originalname),
 		)
 	},
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({ 
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        const ext = path.extname(file.originalname);
+        if(!file) return cb(new Error("File not exist"))
+        if (ext !== '.jpg' && ext !== '.png' && ext !== '.jpeg') return cb(new Error('Invalid image extension.'));
+    },
+ }, 
+    
+)
 
 route.post("/register", upload.single("file"), authController.REGISTER)
 route.post("/login", authController.LOGIN)
