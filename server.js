@@ -13,16 +13,29 @@ app.use("/uploads", express.static( "./uploads"))
 
 import authRole from "./routes/auth.routes.js"
 import userRoute from "./routes/users.routes.js"
+import postRoute from "./routes/blogs.routes.js"
 
 app.use("/auth", authRole)
 app.use("/users", userRoute)
+app.use("/", postRoute)
 
 connectDB()
 app.use(errController);
 
-
+app.use((err, req, res, next) => {
+    const status = err.status || 500;
+    console.log(status);
+    
+    res.status(status).json({
+        error: {
+            message: err.message || 'Internal Server Error',
+            status: status
+        }
+    });
+});
 process.on("unhandledRejection", (err) => {
     console.log("UNHANDLED REJECTION 💥");
+
     console.log(err.name, err.message);
     // process.exit(1);
   });

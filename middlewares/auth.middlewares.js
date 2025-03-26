@@ -1,7 +1,7 @@
-import { errorHandler } from '../utils/error.handler.js'
+import { authErrorHandler } from '../utils/error.handler.js'
 import jwt from "jsonwebtoken"
 
-let checkUser = errorHandler(async (req, resizeBy, next) => {
+let checkUser = authErrorHandler(async (req, resizeBy, next) => {
 	let token = req.headers.authorization
 	if (!token) throw new Error('Log In or Register Please!')
 	if (!token.startsWith('Bearer'))
