@@ -28,6 +28,7 @@ let POST = errorHandler(async (req, res, next) => {
 	responce(res, 201, { message: 'Post Created Successfully', data })
 })
 let UPDATE = errorHandler(async (req, res, next) => {
+    if(req.id == null) throw new Error("You are unable to update this post")
 	let body = req.body
 	let post = await Posts.findById(req.params.id)
 	if (!body.title) post.title = post.title
@@ -40,7 +41,13 @@ let UPDATE = errorHandler(async (req, res, next) => {
 	await post.save()
 	responce(res, 203, { message: 'Successfully updated', post })
 })
-let DELETE = errorHandler(async (req, res, next) => {})
+let DELETE = errorHandler(async (req, res, next) => {
+    if(req.id == null) throw new Error("You are unable to delete this post")
+
+    await Posts.findByIdAndDelete(req.params.id)
+    responce(res, 200, {message: "Seccessfully deleted"})
+
+})
 
 export default {
 	GET,
