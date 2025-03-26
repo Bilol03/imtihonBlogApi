@@ -62,7 +62,7 @@ UserSchema.pre('save', async function (next) {
 UserSchema.virtual('blogs', {
 	ref: 'blogs',
 	localField: '_id',
-	foreignField: 'user',
+	foreignField: 'author',
 })
 
 let user = mongoose.model('users', UserSchema)

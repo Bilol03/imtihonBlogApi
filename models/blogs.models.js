@@ -5,7 +5,7 @@ let BlogSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	body: {
+	post_body: {
 		type: String,
 		required: true,
 	},

@@ -3,6 +3,7 @@ import multer from 'multer'
 import path from 'path'
 import postController from '../controllers/blogs.controller.js'
 import authorization from '../middlewares/auth.middlewares.js'
+import owner from '../middlewares/owner.middlwares.js'
 
 let route = Router()
 const uploadDir = path.join(process.cwd(), 'uploads', 'users')
@@ -33,8 +34,8 @@ const upload = multer({
 route
 	.get('/posts', postController.GET)
 	.get('/posts/:id', postController.GET_BY_ID)
-	.post('/posts', upload.single('file'), postController.POST)
-	.put('/posts/:id', authorization.checkUser, postController.UPDATE)
-	.delete('/posts/:id', authorization.checkUser, postController.DELETE)
+	.post('/posts',authorization.checkUser, upload.single('file'), postController.POST)
+	.put('/posts/:id', authorization.checkUser, owner.checkOwner,  postController.UPDATE)
+	.delete('/posts/:id', authorization.checkUser, owner.checkOwner, postController.DELETE)
 
 export default route
