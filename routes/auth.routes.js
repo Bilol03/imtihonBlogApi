@@ -24,10 +24,16 @@ const upload = multer({
 	fileFilter: function (req, file, cb) {
 		const ext = path.extname(file.originalname)
 		if (!file) return cb(new Error('File not exist'))
-		if (ext !== '.jpg' && ext !== '.png' && ext !== '.jpeg')
+		if (ext !== '.jpg' && ext !== '.png' && ext !== '.jpeg' && ext !== ".JPG")
 			return cb(new Error('Invalid image extension.'))
+        cb(null, true);
+
 	},
+    limits: 1,
+
 })
+
+
 
 route.post('/register', upload.single('file'), authController.REGISTER)
 route.post('/login', authController.LOGIN)

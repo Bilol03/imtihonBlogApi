@@ -2,6 +2,7 @@ import { authErrorHandler } from '../utils/error.handler.js'
 import jwt from "jsonwebtoken"
 
 let checkUser = authErrorHandler(async (req, res, next) => {
+    
 	let token = req.headers.authorization
 	if (!token) throw new Error('Log In or Register Please!')
 	if (!token.startsWith('Bearer'))
