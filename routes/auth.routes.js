@@ -11,6 +11,7 @@ const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		cb(null, uploadDir)
 	},
+
 	filename: function (req, file, cb) {
         const ext = path.extname(file.originalname);
         if(!file) return cb(new Error("File not exist"))
@@ -25,5 +26,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 route.post("/register", upload.single("file"), authController.REGISTER)
+route.post("/login", authController.LOGIN)
+route.post("/refresh", authController.REFRESH)
+route.post("/logout", authController.LOGOUT)
 
 export default route

@@ -1,16 +1,18 @@
 import { errController } from './controllers/errorhandler.controller.js'
 import { connectDB } from './configs/db.config.js'
+import cookieParser from 'cookie-parser'
 import { config } from 'dotenv'
 import express from 'express'
 config()
 
 let app = express()
 app.use(express.json())
+app.use(cookieParser());
 app.use("/uploads", express.static( "./uploads"))
 
 import authRole from "./routes/auth.routes.js"
 
-app.use(authRole)
+app.use("/auth", authRole)
 
 connectDB()
 app.use(errController);

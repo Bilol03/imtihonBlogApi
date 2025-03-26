@@ -39,6 +39,11 @@ let UserSchema = new mongoose.Schema(
 			type: String,
 			select: false,
 		},
+        role: {
+            type: String,
+            required: true,
+            default: "user"
+        }
 	},
 	{
 		toJSON: { virtuals: true },
